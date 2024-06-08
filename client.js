@@ -1,4 +1,4 @@
-const publicVapidKey = 'BOynOrGhgkj8Bfk4hsFENAQYbnqqLSigUUkCNaBsAmNuH6U9EWywR1JIdxBVQOPDbIuTaj0tVAQbczNLkC5zftw';
+const publicVapidKey ="BNqhuxL_l8mAP4Dm_L8e-EsN9AanzxcMx-KH9cFpnVgMAvz2NdS1V5J4A0HSEnlvaaHYgu57ck0f8sGQopQoUWo";
 
 if ('serviceWorker' in navigator) {
   console.log('Registering service worker');
@@ -9,7 +9,7 @@ if ('serviceWorker' in navigator) {
 async function run() {
   console.log('Registering service worker');
   const registration = await navigator.serviceWorker.
-    register('/worker.js', {scope: '/'});
+    register('/worker.js', { scope: '/' });
   console.log('Registered service worker');
 
   console.log('Registering push');
@@ -21,6 +21,15 @@ async function run() {
   console.log('Registered push');
 
   console.log('Sending push');
+  document.getElementById("send-notification").addEventListener("click", async () => {
+    await fetch("/trigger-notification", {
+      method: "POST",
+      body: JSON.stringify(subscription),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  });
   await fetch('/subscribe', {
     method: 'POST',
     body: JSON.stringify(subscription),
